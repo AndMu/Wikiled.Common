@@ -5,7 +5,7 @@ using Wikiled.Common.Extensions;
 namespace Wikiled.Common.Tests.Extensions
 {
     [TestFixture]
-    public class PathExtensionTests
+    public class PathExtensionsTests
     {
         [Test]
         public void GetRelativePath()
