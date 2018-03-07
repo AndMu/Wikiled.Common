@@ -2,8 +2,8 @@
 using System.Linq;
 using NUnit.Framework;
 using Wikiled.Common.Extensions;
+using Wikiled.Common.Reflection;
 using Wikiled.Common.Tests.Data;
-using Wikiled.Core.Utility.Extensions;
 
 namespace Wikiled.Core.Utility.Tests.Extensions
 {

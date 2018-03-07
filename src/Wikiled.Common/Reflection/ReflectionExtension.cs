@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Wikiled.Core.Utility.Extensions;
+using Wikiled.Common.Extensions;
 
 namespace Wikiled.Common.Reflection
 {

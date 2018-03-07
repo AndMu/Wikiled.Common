@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
 using Wikiled.Common.Extensions;
-using Wikiled.Core.Utility.Extensions;
 
 namespace Wikiled.Common.Tests.Extensions
 {

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Wikiled.Core.Utility.Logging;
+using Wikiled.Common.Logging;
 
 namespace Wikiled.Common.Tests.Logging
 {

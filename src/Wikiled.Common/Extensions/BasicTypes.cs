@@ -1,4 +1,4 @@
-﻿namespace Wikiled.Core.Utility.Extensions
+﻿namespace Wikiled.Common.Extensions
 {
     public enum BasicTypes
     {

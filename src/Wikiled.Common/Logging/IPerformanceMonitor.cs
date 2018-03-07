@@ -1,4 +1,4 @@
-﻿namespace Wikiled.Core.Utility.Logging
+﻿namespace Wikiled.Common.Logging
 {
     public interface IPerformanceMonitor
     {
