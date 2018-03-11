@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 
-namespace Wikiled.Core.Utility.Logging
+namespace Wikiled.Common.Logging
 {
     public class PerformanceMonitor
     {

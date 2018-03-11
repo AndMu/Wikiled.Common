@@ -1,4 +1,4 @@
-﻿namespace Wikiled.Core.Utility.Helpers
+﻿namespace Wikiled.Common.Helpers
 {
     public static class HashHelper
     {

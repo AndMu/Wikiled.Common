@@ -1,5 +1,5 @@
 ﻿using System;
-using Wikiled.Core.Utility.Extensions;
+using Wikiled.Common.Extensions;
 
 namespace Wikiled.Common.Tests.Data
 {

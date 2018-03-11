@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Wikiled.Common.Extensions
+namespace Wikiled.Common.Reflection
 {
     public static class ExpressionReflectionExtensions
     {
