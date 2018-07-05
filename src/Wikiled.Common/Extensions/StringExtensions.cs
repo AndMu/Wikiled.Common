@@ -108,13 +108,12 @@ namespace Wikiled.Common.Extensions
 
         public static DateTime? ExtractDate(this string value)
         {
-            DateTime dateTime;
             if (DateTime.TryParseExact(
                 value,
                 "MMMM d, yyyy",
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.AllowWhiteSpaces,
-                out dateTime))
+                out var dateTime))
             {
                 return dateTime;
             }
@@ -157,12 +156,7 @@ namespace Wikiled.Common.Extensions
                 }
             }
 
-            double calculated;
-            if (!double.TryParse(
-                    sb.ToString(),
-                    NumberStyles.Any,
-                    CultureInfo.InvariantCulture,
-                    out calculated))
+            if (!double.TryParse(sb.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var calculated))
             {
                 return null;
             }
@@ -192,12 +186,7 @@ namespace Wikiled.Common.Extensions
                 }
             }
 
-            int calculated;
-            if (!int.TryParse(
-                    sb.ToString(),
-                    NumberStyles.Any,
-                    CultureInfo.InvariantCulture,
-                    out calculated))
+            if (!int.TryParse(sb.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var calculated))
             {
                 return null;
             }
@@ -252,9 +241,8 @@ namespace Wikiled.Common.Extensions
 
         public static string RemoveDiacritics(this string text)
         {
-            return string.Concat(
-                             text.Normalize(NormalizationForm.FormD)
-                                 .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark))
+            return string.Concat(text.Normalize(NormalizationForm.FormD)
+                         .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark))
                          .Normalize(NormalizationForm.FormC);
         }
 
@@ -276,9 +264,21 @@ namespace Wikiled.Common.Extensions
 
         public static string ReplaceString(this string str, string oldValue, string newValue, ReplacementOption options)
         {
-            Guard.NotNullOrEmpty(() => str, str);
-            Guard.NotNullOrEmpty(() => oldValue, oldValue);
-            Guard.NotNullOrEmpty(() => newValue, newValue);
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                throw new ArgumentException("message", nameof(str));
+            }
+
+            if (string.IsNullOrWhiteSpace(oldValue))
+            {
+                throw new ArgumentException("message", nameof(oldValue));
+            }
+
+            if (string.IsNullOrWhiteSpace(newValue))
+            {
+                throw new ArgumentException("message", nameof(newValue));
+            }
+
             var sb = new StringBuilder();
             int previousIndex = 0;
             var comparison = StringComparison.Ordinal;

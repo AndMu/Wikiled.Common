@@ -17,6 +17,8 @@ namespace Wikiled.Common.Tests.Helpers
             Assert.IsTrue(result);
             result = typeof(ReflectionHelperTests).IsSubclassOfGeneric(typeof(IDictionary<,>));
             Assert.IsFalse(result);
+            result = typeof(SubClass2).IsSubclassOfGeneric(typeof(List<>));
+            Assert.IsTrue(result);
         }
     }
 }
