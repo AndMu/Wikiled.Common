@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Wikiled.Common.Arguments;
+﻿using System;
+using System.IO;
 
 namespace Wikiled.Common.Helpers
 {
@@ -9,8 +9,16 @@ namespace Wikiled.Common.Helpers
 
         public FileRelativeCopyItem(string source, string target)
         {
-            Guard.NotNullOrEmpty(() => source, source);
-            Guard.NotNullOrEmpty(() => target, target);
+            if (string.IsNullOrEmpty(source))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(source));
+            }
+
+            if (string.IsNullOrEmpty(target))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(target));
+            }
+
             FileSource = source;
             FileTarget = target;
             targetDirectory = Path.GetDirectoryName(FileTarget);

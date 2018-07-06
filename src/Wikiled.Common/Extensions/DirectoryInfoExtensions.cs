@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Wikiled.Common.Arguments;
+﻿using System;
+using System.IO;
 
 namespace Wikiled.Common.Extensions
 {
@@ -7,7 +7,11 @@ namespace Wikiled.Common.Extensions
     {
         public static bool EnsureDirectoryExistence(this DirectoryInfo directory)
         {
-            Guard.NotNull(() => directory, directory);
+            if (directory == null)
+            {
+                throw new System.ArgumentNullException(nameof(directory));
+            }
+
             if (!directory.Exists)
             {
                 directory.Create();
@@ -30,15 +34,22 @@ namespace Wikiled.Common.Extensions
         // Copies all files from one directory to another.
         public static void CopyTo(this DirectoryInfo source, string destDirectory, bool recursive)
         {
-            Guard.NotNull(() => source, source);
-            Guard.NotNullOrEmpty(() => destDirectory, destDirectory);
-            
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
             // Compile the target.
             DirectoryInfo target = new DirectoryInfo(destDirectory);
             // If the source doesn’t exist, we have to throw an exception.
             if (!source.Exists)
             {
                 throw new DirectoryNotFoundException("Source directory not found: " + source.FullName);
+            }
+
+            if (string.IsNullOrEmpty(destDirectory))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(destDirectory));
             }
 
             // If the target doesn’t exist, we create it.

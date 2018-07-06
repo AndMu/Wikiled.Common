@@ -5,7 +5,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using Wikiled.Common.Arguments;
 using Wikiled.Common.Helpers;
 
 namespace Wikiled.Common.Serialization
@@ -20,9 +19,12 @@ namespace Wikiled.Common.Serialization
         /// </summary>
         public static string SanitizeXmlString(this string xml)
         {
-            Guard.NotNullOrEmpty(() => xml, xml);
-            StringBuilder buffer = new StringBuilder(xml.Length);
+            if (string.IsNullOrEmpty(xml))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(xml));
+            }
 
+            StringBuilder buffer = new StringBuilder(xml.Length);
             foreach (char character in xml)
             {
                 if (IsLegalXmlChar(character, false))
@@ -41,8 +43,16 @@ namespace Wikiled.Common.Serialization
 
         public static XElement SerializeAsXElement(this XmlSerializer serializer, object instance)
         {
-            Guard.NotNull(() => serializer, serializer);
-            Guard.NotNull(() => instance, instance);
+            if (serializer == null)
+            {
+                throw new ArgumentNullException(nameof(serializer));
+            }
+
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+
             XElement element = serializer.XmlSerialize(instance).Root;
             element?.Remove();
             return element;
@@ -50,13 +60,21 @@ namespace Wikiled.Common.Serialization
 
         public static T XmlDeserialize<T>(this string xml, string rootName = null)
         {
-            Guard.NotNullOrEmpty(() => xml, xml);
+            if (string.IsNullOrEmpty(xml))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(xml));
+            }
+
             return XDocument.Parse(xml).XmlDeserialize<T>(rootName);
         }
 
         public static T XmlDeserialize<T>(this FileInfo file, Encoding encoding, string rootName = null)
         {
-            Guard.NotNull(() => file, file);
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+
             using (var stream = file.OpenRead())
             {
                 return stream.IsGZipHeader()
@@ -67,7 +85,11 @@ namespace Wikiled.Common.Serialization
 
         public static T XmlDeserialize<T>(this XDocument document, string rootName = null)
         {
-            Guard.NotNull(() => document, document);
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
             using (var reader = document.CreateReader())
             {
                 return (T)CreateOverrider<T>(rootName).Deserialize(reader);
@@ -76,7 +98,11 @@ namespace Wikiled.Common.Serialization
 
         public static object XmlDeserialize(this XDocument document, Type type, string rootName = null)
         {
-            Guard.NotNull(() => document, document);
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
             using (var reader = document.CreateReader())
             {
                 return CreateOverrider(type, rootName).Deserialize(reader);
@@ -85,7 +111,11 @@ namespace Wikiled.Common.Serialization
 
         public static T XmlDeserialize<T>(this XElement element, string rootName = null)
         {
-            Guard.NotNull(() => element, element);
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
             using (var reader = element.CreateReader())
             {
                 return (T)CreateOverrider<T>(rootName).Deserialize(reader);
@@ -121,8 +151,15 @@ namespace Wikiled.Common.Serialization
 
         public static XDocument XmlSerialize(this XmlSerializer serializer, object instance)
         {
-            Guard.NotNull(() => serializer, serializer);
-            Guard.NotNull(() => instance, instance);
+            if (serializer == null)
+            {
+                throw new ArgumentNullException(nameof(serializer));
+            }
+
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
 
             //Create our own namespaces for the output
             XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
@@ -157,8 +194,7 @@ namespace Wikiled.Common.Serialization
         private static XmlSerializer CreateOverrider(Type type, string rootName = null)
         {
             string name = type.Name + rootName;
-            XmlSerializer serializer;
-            if (!serializerCache.TryGetValue(name, out serializer))
+            if (!serializerCache.TryGetValue(name, out XmlSerializer serializer))
             {
                 if (rootName != null)
                 {

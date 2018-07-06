@@ -80,8 +80,7 @@ namespace Wikiled.Common.Reflection
 
         public static Func<string, object> GetParser(Type type)
         {
-            Func<string, object> conversion;
-            if (!ConversionMethods.TryGetValue(type, out conversion))
+            if (!ConversionMethods.TryGetValue(type, out Func<string, object> conversion))
             {
                 conversion = GetParserInternal(type);
                 ConversionMethods[type] = conversion;
@@ -131,8 +130,7 @@ namespace Wikiled.Common.Reflection
         /// <returns>Description</returns>
         public static string GetTypeName(this Type type)
         {
-            string name;
-            if (!TypeNameTable.TryGetValue(type, out name))
+            if (!TypeNameTable.TryGetValue(type, out string name))
             {
                 name = $"{type.FullName},{type.Assembly.GetName().Name}";
                 TypeNameTable[type] = name;
@@ -197,8 +195,7 @@ namespace Wikiled.Common.Reflection
                 return false;
             }
 
-            bool result;
-            if (!isPrimitive.TryGetValue(type, out result))
+            if (!isPrimitive.TryGetValue(type, out bool result))
             {
                 result = type.IsPrimitive || type == typeof(string) || type.IsNumericType();
                 isPrimitive[type] = result;
@@ -214,8 +211,7 @@ namespace Wikiled.Common.Reflection
         /// <returns></returns>
         public static Type ResolveType(this string typeName)
         {
-            Type type;
-            if (!TypeTable.TryGetValue(typeName, out type))
+            if (!TypeTable.TryGetValue(typeName, out Type type))
             {
                 type = Type.GetType(typeName);
                 TypeTable[typeName] = type;

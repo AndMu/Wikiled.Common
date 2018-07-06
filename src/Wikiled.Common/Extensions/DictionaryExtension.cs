@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.Common.Extensions
 {
@@ -9,7 +8,11 @@ namespace Wikiled.Common.Extensions
     {
         public static bool TryGetAddItem<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary, TKey key, TValue value, out TValue existingValue)
         {
-            Guard.NotNull(() => dictionary, dictionary);
+            if (dictionary == null)
+            {
+                throw new ArgumentNullException(nameof(dictionary));
+            }
+
             if (!dictionary.TryGetValue(key, out existingValue))
             {
                 existingValue = value;
@@ -40,8 +43,7 @@ namespace Wikiled.Common.Extensions
         public static TValue GetItemCreate<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
             where TValue : new()
         {
-            TValue value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out TValue value))
             {
                 return value;
             }
@@ -74,8 +76,7 @@ namespace Wikiled.Common.Extensions
         /// <returns>Dictionary key. default() if not found</returns>
         public static K GetSafe<T, K>(this Dictionary<T, K> dictionary, T key)
         {
-            K value;
-            return dictionary.TryGetValue(key, out value) ? value : default(K);
+            return dictionary.TryGetValue(key, out K value) ? value : default(K);
         }
 
         /// <summary>
@@ -106,8 +107,7 @@ namespace Wikiled.Common.Extensions
             T key,
             Func<T, K> evalutor)
         {
-            K value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out K value))
             {
                 return value;
             }
@@ -131,8 +131,7 @@ namespace Wikiled.Common.Extensions
             T key,
             Func<K> evalutor)
         {
-            K value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out K value))
             {
                 return value;
             }
@@ -165,8 +164,7 @@ namespace Wikiled.Common.Extensions
         /// <returns>Dictionary key. default() if not found</returns>
         public static K GetSafe<T, K>(this IDictionary<T, K> dictionary, T key)
         {
-            K value;
-            return dictionary.TryGetValue(key, out value) ? value : default(K);
+            return dictionary.TryGetValue(key, out K value) ? value : default(K);
         }
 
         /// <summary>
@@ -179,8 +177,7 @@ namespace Wikiled.Common.Extensions
         /// <returns></returns>
         public static K GetSafeDelete<T, K>(this IDictionary<T, K> dictionary, T key)
         {
-            K value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out K value))
             {
                 dictionary.Remove(key);
                 return value;
@@ -217,8 +214,7 @@ namespace Wikiled.Common.Extensions
             T key,
             Func<T, K> evalutor)
         {
-            K value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out K value))
             {
                 return value;
             }
@@ -242,8 +238,7 @@ namespace Wikiled.Common.Extensions
             T key,
             Func<K> evalutor)
         {
-            K value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out K value))
             {
                 return value;
             }

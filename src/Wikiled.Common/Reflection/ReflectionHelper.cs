@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.Common.Reflection
 {
@@ -9,7 +8,13 @@ namespace Wikiled.Common.Reflection
         public static bool IsSubclassOfGeneric(this Type toCheck, Type generic)
         {
             var genericInfo = generic.GetTypeInfo();
-            Guard.IsValid(() => genericInfo, genericInfo, info => info.IsGenericType && info.GenericTypeArguments.Length == 0, "Invalid generic definition. Should be similar to Dictionary<,>, whithout type");
+            if (!genericInfo.IsGenericType || genericInfo.GenericTypeArguments.Length != 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "Invalid generic definition. Should be similar to Dictionary<,>, whithout type",
+                    nameof(generic));
+            }
+
             while (toCheck != null && toCheck != typeof(object))
             {
                 var current = toCheck.GetTypeInfo().IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;

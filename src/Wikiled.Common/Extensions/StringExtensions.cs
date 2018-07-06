@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.Common.Extensions
 {
@@ -264,19 +263,19 @@ namespace Wikiled.Common.Extensions
 
         public static string ReplaceString(this string str, string oldValue, string newValue, ReplacementOption options)
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrEmpty(str))
             {
-                throw new ArgumentException("message", nameof(str));
+                throw new ArgumentException("Value cannot be null or empty.", nameof(str));
             }
 
-            if (string.IsNullOrWhiteSpace(oldValue))
+            if (string.IsNullOrEmpty(oldValue))
             {
-                throw new ArgumentException("message", nameof(oldValue));
+                throw new ArgumentException("Value cannot be null or empty.", nameof(oldValue));
             }
 
-            if (string.IsNullOrWhiteSpace(newValue))
+            if (string.IsNullOrEmpty(newValue))
             {
-                throw new ArgumentException("message", nameof(newValue));
+                throw new ArgumentException("Value cannot be null or empty.", nameof(newValue));
             }
 
             var sb = new StringBuilder();
@@ -333,10 +332,25 @@ namespace Wikiled.Common.Extensions
             string oldValueEnd,
             string newValue)
         {
-            Guard.NotNullOrEmpty(() => oldValueBegin, oldValueBegin);
-            Guard.NotNullOrEmpty(() => oldValueEnd, oldValueEnd);
-            Guard.NotNullOrEmpty(() => newValue, newValue);
-            Guard.NotNullOrEmpty(() => str, str);
+            if (string.IsNullOrEmpty(str))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(str));
+            }
+
+            if (string.IsNullOrEmpty(oldValueBegin))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(oldValueBegin));
+            }
+
+            if (string.IsNullOrEmpty(oldValueEnd))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(oldValueEnd));
+            }
+
+            if (string.IsNullOrEmpty(newValue))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(newValue));
+            }
 
             string pattern = $@"{RemoveSpecialSymbols(oldValueBegin)}.*?{RemoveSpecialSymbols(oldValueEnd)}";
             return Regex.Replace(str, pattern, newValue, RegexOptions.IgnoreCase);

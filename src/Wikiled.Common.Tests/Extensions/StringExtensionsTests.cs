@@ -85,13 +85,8 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("This is text", "is", "as", "This as text")]
         public void ReplaceString(string text, string replace, string with, string expected)
         {
-            replace = replace + replace + replace + replace + replace;
-            for (int i = 0; i < 1000000; i++)
-            {
-                var result = text.ReplaceString(replace, with, ReplacementOption.IgnoreCase | ReplacementOption.WholeWord);
-            }
-            
-            //Assert.AreEqual(expected, result);
+            var result = text.ReplaceString(replace, with, ReplacementOption.IgnoreCase | ReplacementOption.WholeWord);
+            Assert.AreEqual(expected, result);
         }
     }
 }

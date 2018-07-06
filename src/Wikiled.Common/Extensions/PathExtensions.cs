@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.Common.Extensions
 {
@@ -8,8 +7,16 @@ namespace Wikiled.Common.Extensions
     {
         public static string GetRelativePath(this string source, string target)
         {
-            Guard.NotNullOrEmpty(() => source, source);
-            Guard.NotNullOrEmpty(() => target, target);
+            if (string.IsNullOrEmpty(source))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(source));
+            }
+
+            if (string.IsNullOrEmpty(target))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(target));
+            }
+
             Uri uri1 = new Uri(target);
             Uri uri2 = new Uri(source);
             return uri2.MakeRelativeUri(uri1)
@@ -20,8 +27,8 @@ namespace Wikiled.Common.Extensions
 
         public static string InsertSubFolder(this string path, string subFolder, int depth)
         {
-            Guard.NotNullOrEmpty(() => subFolder, subFolder);
-            Guard.IsValid(() => depth, depth, item => item >= 0, nameof(depth));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            if (depth < 0) throw new ArgumentOutOfRangeException(nameof(depth));
 
             var items = path.Split('\\');
             bool firstReserved = false;

@@ -22,7 +22,7 @@ namespace Wikiled.Common.Tests.Helpers
         [Test]
         public void Arguments()
         {
-            Assert.Throws<ArgumentNullException>(() => FileManager.FindFiles(null, ".dll", ".pdb").ToArray());
+            Assert.Throws<ArgumentException>(() => FileManager.FindFiles(null, ".dll", ".pdb").ToArray());
             Assert.Throws<ArgumentNullException>(() => FileManager.FindFiles("..", null).ToArray());
             Assert.Throws<ArgumentOutOfRangeException>(() => FileManager.FindFiles("..").ToArray());
             Assert.Throws<ArgumentOutOfRangeException>(() => FileManager.FindFiles("..", "dll").ToArray());

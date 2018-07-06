@@ -23,8 +23,7 @@ namespace Wikiled.Common.Tests.Extensions
         public void GetAddItem()
         {
             ConcurrentDictionary<string, string> table = new ConcurrentDictionary<string, string>();
-            string value;
-            var result = table.TryGetAddItem("Test", "Test", out value);
+            var result = table.TryGetAddItem("Test", "Test", out string value);
             Assert.IsTrue(result);
             Assert.AreEqual("Test", value);
             result = table.TryGetAddItem("Test", "Test1", out value);

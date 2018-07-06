@@ -12,7 +12,7 @@ namespace Wikiled.Common.Tests.Helpers
         [Test]
         public void Construct()
         {
-            Assert.Throws<ArgumentException>(() => typeof(SubClass).IsSubclassOfGeneric(typeof(Dictionary<string, string>)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => typeof(SubClass).IsSubclassOfGeneric(typeof(Dictionary<string, string>)));
             var result = typeof(SubClass).IsSubclassOfGeneric(typeof(Dictionary<,>));
             Assert.IsTrue(result);
             result = typeof(ReflectionHelperTests).IsSubclassOfGeneric(typeof(IDictionary<,>));

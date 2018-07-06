@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.Common.Extensions
 {
@@ -18,7 +18,11 @@ namespace Wikiled.Common.Extensions
         /// IpV6 (when available) format depending on <paramref name="favorIpV6"/></returns>
         public static IPAddress ToIpAddress(this string hostNameOrAddress, bool favorIpV6 = false)
         {
-            Guard.IsValid(() => hostNameOrAddress, hostNameOrAddress, name => !string.IsNullOrEmpty(name), "hostNameOrAddress");
+            if (string.IsNullOrWhiteSpace(hostNameOrAddress))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(hostNameOrAddress));
+            }
+
             var favoredFamily = favorIpV6 ? AddressFamily.InterNetworkV6 : AddressFamily.InterNetwork;
             var addrs = Dns.GetHostAddresses(hostNameOrAddress);
             return addrs.FirstOrDefault(addr => addr.AddressFamily == favoredFamily) ?? addrs.FirstOrDefault();
