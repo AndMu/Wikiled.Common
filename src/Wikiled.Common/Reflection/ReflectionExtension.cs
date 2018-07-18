@@ -349,7 +349,7 @@ namespace Wikiled.Common.Reflection
             item.SetValue(instance, value, null);
         }
 
-        private static object ConvertTo(Type targetType, string value)
+        public static object ConvertTo(Type targetType, string value)
         {
             if (targetType == typeof(string))
             {
