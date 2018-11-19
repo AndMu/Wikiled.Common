@@ -9,7 +9,7 @@ namespace Wikiled.Common.Extensions
         {
             if (directory == null)
             {
-                throw new System.ArgumentNullException(nameof(directory));
+                throw new ArgumentNullException(nameof(directory));
             }
 
             if (!directory.Exists)

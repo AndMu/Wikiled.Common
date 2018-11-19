@@ -9,8 +9,8 @@ namespace Wikiled.Common.Tests.Extensions
         [Test]
         public void ToIpAddress()
         {
-            var ipAddress = "server".ToIpAddress();
-            var ipv6Address = "server".ToIpAddress(true);
+            var ipAddress = "localhost".ToIpAddress();
+            var ipv6Address = "localhost".ToIpAddress(true);
             Assert.IsNotNull(ipAddress);
             Assert.IsNotNull(ipv6Address);
         }
