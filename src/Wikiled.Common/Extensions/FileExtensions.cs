@@ -23,6 +23,10 @@ namespace Wikiled.Common.Extensions
                     return;
                 }
             }
+            else
+            {
+                return;
+            }
 
             string location = Path.GetDirectoryName(file);
             string fileName = Path.GetFileNameWithoutExtension(file);
