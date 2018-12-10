@@ -18,6 +18,15 @@ namespace Wikiled.Common.Tests.Helpers
         }
 
         [Test]
+        public void ZipAsTextFile()
+        {
+            var data = "test".ZipAsTextFile();
+            Assert.Greater(data.Length, 0);
+            var text = data.UnZipTextFile();
+            Assert.AreEqual("test", text);
+        }
+
+        [Test]
         public void Zip()
         {
             var data = "test".Zip();

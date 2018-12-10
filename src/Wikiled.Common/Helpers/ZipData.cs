@@ -10,6 +10,59 @@ namespace Wikiled.Common.Helpers
 {
     public static class ZipData
     {
+        public static byte[] ZipAsTextFile(this string textToZip, string fileName = "zipped.txt")
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    var demoFile = zipArchive.CreateEntry(fileName);
+
+                    using (var entryStream = demoFile.Open())
+                    {
+                        using (var streamWriter = new StreamWriter(entryStream))
+                        {
+                            streamWriter.Write(textToZip);
+                        }
+                    }
+                }
+
+                return memoryStream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Unzip a zipped byte array into a string.
+        /// </summary>
+        /// <param name="zippedBuffer">The byte array to be unzipped</param>
+        /// <returns>string representing the original stream</returns>
+        public static string UnZipTextFile(this byte[] zippedBuffer)
+        {
+            using (var zippedStream = new MemoryStream(zippedBuffer))
+            {
+                using (var archive = new ZipArchive(zippedStream))
+                {
+                    var entry = archive.Entries.FirstOrDefault();
+
+                    if (entry != null)
+                    {
+                        using (var unzippedEntryStream = entry.Open())
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                unzippedEntryStream.CopyTo(ms);
+                                var unzippedArray = ms.ToArray();
+
+                                return Encoding.Default.GetString(unzippedArray);
+                            }
+                        }
+                    }
+
+                    return null;
+                }
+            }
+        }
+
         public static byte[] Zip(this byte[] orginalData)
         {
             using (var memory = new MemoryStream())
