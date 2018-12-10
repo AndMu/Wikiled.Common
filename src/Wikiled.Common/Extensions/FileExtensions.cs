@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using Wikiled.Common.Helpers;
 
 namespace Wikiled.Common.Extensions
@@ -15,29 +14,40 @@ namespace Wikiled.Common.Extensions
                 throw new ArgumentNullException(nameof(file));
             }
 
-            var location = Path.GetDirectoryName(file);
-            var fileName = Path.GetFileNameWithoutExtension(file);
-            var allFiles = FileManager.FindFilesByMask(location, $"{fileName}.*");
-            int current = 0;
-            foreach (var currentFile in allFiles)
+            if (File.Exists(file))
             {
-                var extension = Path.GetExtension(currentFile);
+                FileInfo info = new FileInfo(file);
+                if (info.Length == 0)
+                {
+                    File.Delete(file);
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
+
+            string location = Path.GetDirectoryName(file);
+            string fileName = Path.GetFileNameWithoutExtension(file);
+            System.Collections.Generic.IEnumerable<string> allFiles = FileManager.FindFilesByMask(location, $"{fileName}.*");
+            int current = 0;
+            foreach (string currentFile in allFiles)
+            {
+                string extension = Path.GetExtension(currentFile);
                 if (extension?.Length > 0 &&
                     int.TryParse(extension.Substring(1),
                                  NumberStyles.Any,
                                  CultureInfo.DefaultThreadCurrentUICulture,
-                                 out var number) &&
+                                 out int number) &&
                     number > current)
                 {
                     current = number;
                 }
             }
 
-            if (File.Exists(file))
-            {
-                var newPath = Path.Combine(location, $"{fileName}.{current + 1}");
-                File.Move(file, newPath);
-            }
+            string newPath = Path.Combine(location, $"{fileName}.{current + 1}");
+            File.Move(file, newPath);
         }
     }
 }
