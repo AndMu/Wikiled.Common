@@ -36,15 +36,25 @@ namespace Wikiled.Common.Logging
             Interlocked.Increment(ref current);
         }
 
+        public long Total
+        {
+            get
+            {
+                var manual = Volatile.Read(ref manualCount);
+                var total = manual > initial ? manual : initial;
+                var currentStep = Volatile.Read(ref current);
+                total = total < currentStep ? currentStep : total;
+                return total;
+            }
+        }
+
         public override string ToString()
         {
             var time = timer.Elapsed;
             var allTime = timerAll.Elapsed;
-            var manual = Volatile.Read(ref manualCount);
-            var total = manual > initial ? manual : initial;
-
             var currentStep = Volatile.Read(ref current);
-            total = total < currentStep ? currentStep : total;
+            var total = Total;
+
             timer.Restart();
 
             var step = currentStep - lastStep;
