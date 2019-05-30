@@ -72,40 +72,40 @@ namespace Wikiled.Common.Extensions
 
         public static string CreateLetterText(this string word)
         {
-            Span<char> spanned = word.ToCharArray();
-            foreach (ref char letter in spanned)
+            if (string.IsNullOrEmpty(word))
             {
-                if (!char.IsLetterOrDigit(letter))
+                return word;
+            }
+
+            char[] result = word.ToCharArray();
+            for (int i = 0; i < result.Length; i++)
+            {
+                if (!char.IsLetterOrDigit(result[i]))
                 {
-                    letter = '_';
+                    result[i] = '_';
                 }
             }
 
-            return new string(spanned.ToArray());
+            return new string(result);
         }
 
         public static string CreatePureLetterText(this string word)
         {
-            var builder = new StringBuilder();
+            var letters = word.ToCharArray();
             for (int i = 0; i < word.Length; i++)
             {
-                if (word[i] == ' ')
+                var letter = word[i];
+                if (letter == ' ')
                 {
-                    builder.Append('_');
+                    letters[i] = '_';
                 }
-                else if (word[i] != '_' &&
-                         word[i] != '-' &&
-                         !char.IsLetterOrDigit(word[i]))
+                else if (letter != '_' && letter != '-' && !char.IsLetterOrDigit(letter))
                 {
-                    builder.Append(".");
-                }
-                else
-                {
-                    builder.Append(word[i]);
+                    letters[i] = '.';
                 }
             }
 
-            return builder.ToString();
+            return new string(letters);
         }
 
         public static DateTime? ExtractDate(this string value)
