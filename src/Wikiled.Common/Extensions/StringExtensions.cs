@@ -72,13 +72,16 @@ namespace Wikiled.Common.Extensions
 
         public static string CreateLetterText(this string word)
         {
-            var builder = new StringBuilder();
-            foreach (char letter in word)
+            Span<char> spanned = word.ToCharArray();
+            foreach (ref char letter in spanned)
             {
-                builder.Append(!char.IsLetterOrDigit(letter) ? '_' : letter);
+                if (!char.IsLetterOrDigit(letter))
+                {
+                    letter = '_';
+                }
             }
 
-            return builder.ToString();
+            return new string(spanned.ToArray());
         }
 
         public static string CreatePureLetterText(this string word)

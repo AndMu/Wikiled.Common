@@ -16,9 +16,9 @@ namespace Wikiled.Common.Helpers
             {
                 using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
-                    var demoFile = zipArchive.CreateEntry(fileName);
+                    var entry = zipArchive.CreateEntry(fileName);
 
-                    using (var entryStream = demoFile.Open())
+                    using (var entryStream = entry.Open())
                     {
                         using (var streamWriter = new StreamWriter(entryStream))
                         {
@@ -104,7 +104,6 @@ namespace Wikiled.Common.Helpers
                    arr[0] == 0x1F &&
                    arr[1] == 0x8b &&
                    arr[2] == 0x08;
-            ;
         }
 
         public static byte[] Zip(this string text)
