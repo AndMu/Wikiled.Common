@@ -82,6 +82,24 @@ namespace Wikiled.Common.Tests.Extensions
             Assert.AreEqual(result, text.IsEnding(ending));
         }
 
+        [TestCase("My  whole life", " ", true, "My whole life")]
+        [TestCase("My  whole life", " ", false, "Mywholelife")]
+        [TestCase("My  whole life", " w", false, "Myholelife")]
+        [TestCase("My  whole life", " wled", true, "My whole life")]
+        public void RemoveCharacters(string text, string remove, bool duplicates, string expected)
+        {
+            var letters = remove.ToCharArray();
+            var result = text.RemoveCharacters(duplicates, letters);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestCase("sudarė valdančiąją koaliciją", "sudare valdanciaja koalicija")]
+        public void RemoveDiacritics(string text, string expected)
+        {
+            var result = text.RemoveDiacritics();
+            Assert.AreEqual(expected, result);
+        }
+
         [TestCase("This is text", "is", "as", "This as text")]
         public void ReplaceString(string text, string replace, string with, string expected)
         {

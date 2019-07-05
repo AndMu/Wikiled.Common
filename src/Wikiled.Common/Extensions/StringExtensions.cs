@@ -329,47 +329,34 @@ namespace Wikiled.Common.Extensions
             return sb.ToString();
         }
 
-        public static string ReplaceStringWithRange(
-            this string str,
-            string oldValueBegin,
-            string oldValueEnd,
-            string newValue)
+        public static string RemoveCharacters(this string str, bool duplicates = false, params char[] letters)
         {
-            if (string.IsNullOrEmpty(str))
+            if (str == null)
             {
-                throw new ArgumentException("Value cannot be null or empty.", nameof(str));
+                throw new ArgumentNullException(nameof(str));
             }
 
-            if (string.IsNullOrEmpty(oldValueBegin))
+            if (letters.Length == 0)
             {
-                throw new ArgumentException("Value cannot be null or empty.", nameof(oldValueBegin));
+                return str;
             }
 
-            if (string.IsNullOrEmpty(oldValueEnd))
+            var table = letters.ToLookup(item => item);
+            var builder = new StringBuilder(str.Length);
+            char? previous = null;
+            foreach (var letter in str)
             {
-                throw new ArgumentException("Value cannot be null or empty.", nameof(oldValueEnd));
+                var sameAsPrevious = letter == previous;
+                previous = letter;
+                if (table.Contains(letter) && ((duplicates && sameAsPrevious) || !duplicates))
+                {
+                    continue;
+                }
+
+                builder.Append(letter);
             }
 
-            if (string.IsNullOrEmpty(newValue))
-            {
-                throw new ArgumentException("Value cannot be null or empty.", nameof(newValue));
-            }
-
-            string pattern = $@"{RemoveSpecialSymbols(oldValueBegin)}.*?{RemoveSpecialSymbols(oldValueEnd)}";
-            return Regex.Replace(str, pattern, newValue, RegexOptions.IgnoreCase);
-        }
-
-        private static string RemoveSpecialSymbols(this string text)
-        {
-            text = text.Replace(@"\", @"\\");
-            text = text.Replace("[", @"\[");
-            text = text.Replace("]", @"\]");
-            text = text.Replace("(", @"\(");
-            text = text.Replace(")", @"\)");
-            text = text.Replace(".", @"\.");
-            text = text.Replace(@"+", @"\+");
-            text = text.Replace(@"*", @"\*");
-            return text;
+            return builder.ToString();
         }
     }
 }
