@@ -35,9 +35,10 @@ namespace Wikiled.Common.Serialization
             }
 
             // instantiate a MemoryStream and a new instance of our class           
+            DataContractSerializer ser = new DataContractSerializer(typeof(T));
+
             using (var stream = new MemoryStream())
             {
-                DataContractSerializer ser = new DataContractSerializer(typeof(T));
                 ser.WriteObject(stream, data);
                 stream.Seek(0, 0);
                 return stream.ToArray();
