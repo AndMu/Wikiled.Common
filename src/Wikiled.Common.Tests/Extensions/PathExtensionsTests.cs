@@ -36,5 +36,14 @@ namespace Wikiled.Common.Tests.Extensions
             Assert.AreEqual(@"4\1\2\3", @"1\2\3".InsertSubFolder("4", 3));
             Assert.AreEqual(@"4\1\2\3", @"1\2\3".InsertSubFolder("4", 4));
         }
+
+        [TestCase("/windows/system32", "/windows/system32/")]
+        [TestCase("c:/windows/system32/", "c:/windows/system32/")]
+        [TestCase("/windows/system32\\", "/windows/system32\\")]
+        [TestCase("\\windows\\system32\\", "\\windows\\system32\\")]
+        public void PathAddBackslash(string path, string result)
+        {
+            Assert.AreEqual(result, path.PathAddBackslash());
+        }
     }
 }
