@@ -11,7 +11,7 @@ namespace Wikiled.Common.Serialization
 {
     public static class XmlSerializerExtension
     {
-        private static readonly ConcurrentDictionary<string, XmlSerializer> serializerCache =
+        private static readonly ConcurrentDictionary<string, XmlSerializer> SerializerCache =
             new ConcurrentDictionary<string, XmlSerializer>();
 
         /// <summary>
@@ -161,10 +161,10 @@ namespace Wikiled.Common.Serialization
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            //Create our own namespaces for the output
+            // Create our own namespaces for the output
             XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
 
-            //Add an empty namespace and empty value
+            // Add an empty namespace and empty value
             namespaces.Add(string.Empty, string.Empty);
             XDocument document = new XDocument();
             using (XmlWriter writer = document.CreateWriter())
@@ -194,7 +194,7 @@ namespace Wikiled.Common.Serialization
         private static XmlSerializer CreateOverrider(Type type, string rootName = null)
         {
             string name = type.Name + rootName;
-            if (!serializerCache.TryGetValue(name, out XmlSerializer serializer))
+            if (!SerializerCache.TryGetValue(name, out XmlSerializer serializer))
             {
                 if (rootName != null)
                 {
@@ -215,7 +215,7 @@ namespace Wikiled.Common.Serialization
                     serializer = new XmlSerializer(type);
                 }
 
-                serializerCache[name] = serializer;
+                SerializerCache[name] = serializer;
             }
 
             return serializer;
@@ -228,8 +228,8 @@ namespace Wikiled.Common.Serialization
         {
             return
                 (withSpecialSymbols && (
-                                           character == 0x9 /* == '\t' == 9   */||
-                                           character == 0xA /* == '\n' == 10  */||
+                                           character == 0x9 /* == '\t' == 9   */ ||
+                                           character == 0xA /* == '\n' == 10  */ ||
                                            character == 0xD /* == '\r' == 13  */)) ||
                 (character >= 0x20 && character <= 0xD7FF) ||
                 (character >= 0xE000 && character <= 0xFFFD) ||

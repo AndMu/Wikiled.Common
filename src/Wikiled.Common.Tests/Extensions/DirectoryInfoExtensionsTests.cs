@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Extensions;
 
 namespace Wikiled.Common.Tests.Extensions
@@ -33,10 +34,10 @@ namespace Wikiled.Common.Tests.Extensions
         public void EnsureDirectoryExistence()
         {
             directory.Refresh();
-            Assert.IsFalse(directory.Exists);
+            ClassicAssert.IsFalse(directory.Exists);
             directory.EnsureDirectoryExistence();
             directory.Refresh();
-            Assert.IsTrue(directory.Exists);
+            ClassicAssert.IsTrue(directory.Exists);
         }
     }
 }

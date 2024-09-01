@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Logging;
 
 namespace Wikiled.Common.Tests.Logging
@@ -17,7 +18,7 @@ namespace Wikiled.Common.Tests.Logging
         [Test]
         public void Construct()
         {
-            Assert.AreEqual("Processed: 0/9 Operations per second: 0", instance.ToString());
+            ClassicAssert.AreEqual("Processed: 0/9 Operations per second: 0", instance.ToString());
             for (int i = 0; i < 5; i++)
             {
                 instance.ManualyCount();
@@ -25,7 +26,7 @@ namespace Wikiled.Common.Tests.Logging
             }
 
             instance.Increment();
-            Assert.AreEqual("Processed: 6/9 Opera", instance.ToString().Substring(0, 20));
+            ClassicAssert.AreEqual("Processed: 6/9 Opera", instance.ToString().Substring(0, 20));
             for (int i = 0; i < 10; i++)
             {
                 instance.ManualyCount();
@@ -36,7 +37,7 @@ namespace Wikiled.Common.Tests.Logging
                 instance.Increment();
             }
 
-            Assert.AreEqual("Processed: 16/16 Ope", instance.ToString().Substring(0, 20));
+            ClassicAssert.AreEqual("Processed: 16/16 Ope", instance.ToString().Substring(0, 20));
         }
 
         private PerformanceMonitor CreatePerformanceMonitor()

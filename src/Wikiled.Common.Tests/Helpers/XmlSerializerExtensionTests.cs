@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Serialization;
 using Wikiled.Common.Tests.Data;
 
@@ -24,40 +25,40 @@ namespace Wikiled.Common.Tests.Helpers
                                          };
             XElement element = text.SerializeAsXElement("x");
             var instance = element.XmlDeserialize<MockConfiguration>("x");
-            Assert.AreEqual("Hi", instance.Name);
-            Assert.AreEqual(1, instance.Data);
-            Assert.AreEqual(3, instance.Data3);
+            ClassicAssert.AreEqual("Hi", instance.Name);
+            ClassicAssert.AreEqual(1, instance.Data);
+            ClassicAssert.AreEqual(3, instance.Data3);
         }
 
         [Test]
         public void DeserializeNullNode()
         {
             XElement element = null;
-            Assert.Throws<ArgumentNullException>(() => element.XmlDeserialize<MockConfiguration>("x"));
+            ClassicAssert.Throws<ArgumentNullException>(() => element.XmlDeserialize<MockConfiguration>("x"));
         }
 
         [Test]
         public void DeserializeText()
         {
             var instance = xml.XmlDeserialize<MockConfiguration>("x");
-            Assert.AreEqual("Hi", instance.Name);
-            Assert.AreEqual(1, instance.Data);
-            Assert.AreEqual(3, instance.Data3);
+            ClassicAssert.AreEqual("Hi", instance.Name);
+            ClassicAssert.AreEqual(1, instance.Data);
+            ClassicAssert.AreEqual(3, instance.Data3);
         }
 
         [Test]
         public void DeserializeTextNull()
         {
-            Assert.Throws<ArgumentException>(() => string.Empty.XmlDeserialize<MockConfiguration>("x"));
+            ClassicAssert.Throws<ArgumentException>(() => string.Empty.XmlDeserialize<MockConfiguration>("x"));
         }
 
         [Test]
         public void DeserializeTextOriginal()
         {
             var instance = xmlOriginal.XmlDeserialize<MockConfiguration>();
-            Assert.AreEqual("Hi", instance.Name);
-            Assert.AreEqual(1, instance.Data);
-            Assert.AreEqual(3, instance.Data3);
+            ClassicAssert.AreEqual("Hi", instance.Name);
+            ClassicAssert.AreEqual(1, instance.Data);
+            ClassicAssert.AreEqual(3, instance.Data3);
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace Wikiled.Common.Tests.Helpers
                                          };
 
             XElement element = text.SerializeAsXElement("x");
-            Assert.Throws<InvalidOperationException>(() => element.XmlDeserialize<MockConfiguration>("xx"));
+            ClassicAssert.Throws<InvalidOperationException>(() => element.XmlDeserialize<MockConfiguration>("xx"));
         }
 
         [Test]
@@ -79,14 +80,14 @@ namespace Wikiled.Common.Tests.Helpers
         {
             string text = "test" + (char)1;
             string result = text.SanitizeXmlString();
-            Assert.AreEqual("test", result);
+            ClassicAssert.AreEqual("test", result);
         }
 
         [Test]
         public void SanitizeXmlStringWithEndOfLine()
         {
             string result = "test\n\t".SanitizeXmlString();
-            Assert.AreEqual("test", result);
+            ClassicAssert.AreEqual("test", result);
         }
 
         [Test]
@@ -99,18 +100,18 @@ namespace Wikiled.Common.Tests.Helpers
                                              Data3 = 3
                                          };
             XElement element = text.SerializeAsXElement("x");
-            Assert.IsNotNull(element);
-            Assert.AreEqual("x", element.Name.LocalName);
-            Assert.AreEqual("Hi", element.Element("Name").Value);
-            Assert.AreEqual("1", element.Element("Data").Value);
-            Assert.AreEqual("3", element.Element("Data3").Value);
+            ClassicAssert.IsNotNull(element);
+            ClassicAssert.AreEqual("x", element.Name.LocalName);
+            ClassicAssert.AreEqual("Hi", element.Element("Name").Value);
+            ClassicAssert.AreEqual("1", element.Element("Data").Value);
+            ClassicAssert.AreEqual("3", element.Element("Data3").Value);
         }
 
         [Test]
         public void SerializeAsXElementNull()
         {
             MockConfiguration text = null;
-            Assert.Throws<ArgumentNullException>(() => text.SerializeAsXElement("x"));
+            ClassicAssert.Throws<ArgumentNullException>(() => text.SerializeAsXElement("x"));
         }
 
         [Test]
@@ -123,11 +124,11 @@ namespace Wikiled.Common.Tests.Helpers
                                              Data3 = 3
                                          };
             var instance = text.XmlSerializeZip();
-            Assert.Greater(instance.Length, 0);
+            ClassicAssert.Greater(instance.Length, 0);
             var back = instance.XmlDeserializeZip<MockConfiguration>();
-            Assert.AreEqual("Hi", back.Name);
-            Assert.AreEqual(1, back.Data);
-            Assert.AreEqual(3, back.Data3);
+            ClassicAssert.AreEqual("Hi", back.Name);
+            ClassicAssert.AreEqual(1, back.Data);
+            ClassicAssert.AreEqual(3, back.Data3);
         }
     }
 }

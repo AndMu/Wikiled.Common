@@ -20,9 +20,6 @@ namespace Wikiled.Common.Reflection
             {
                 var format = Expression.Constant("dd/MM/yyyy HH:mm:ss");
                 var culture = Expression.Constant(CultureInfo.InvariantCulture);
-                //new "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture
-                //DateTime date;
-                //var ta = date.ToString("Test", CultureInfo.InvariantCulture)
                 property = Expression.Call(property, "ToString", null, format, culture);
             }
             else if (propertyInfo.PropertyType != typeof(string))

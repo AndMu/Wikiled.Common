@@ -41,6 +41,7 @@ namespace Wikiled.Common.Extensions
 
             // Compile the target.
             DirectoryInfo target = new DirectoryInfo(destDirectory);
+
             // If the source doesn’t exist, we have to throw an exception.
             if (!source.Exists)
             {

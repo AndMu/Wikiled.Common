@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Extensions;
 
 namespace Wikiled.Common.Tests.Extensions
@@ -11,8 +12,8 @@ namespace Wikiled.Common.Tests.Extensions
         {
             var ipAddress = "localhost".ToIpAddress();
             var ipv6Address = "localhost".ToIpAddress(true);
-            Assert.IsNotNull(ipAddress);
-            Assert.IsNotNull(ipv6Address);
+            ClassicAssert.IsNotNull(ipAddress);
+            ClassicAssert.IsNotNull(ipv6Address);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Reflection;
 using Wikiled.Common.Tests.Data;
 
@@ -12,13 +13,13 @@ namespace Wikiled.Common.Tests.Helpers
         [Test]
         public void Construct()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => typeof(SubClass).IsSubclassOfGeneric(typeof(Dictionary<string, string>)));
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(() => typeof(SubClass).IsSubclassOfGeneric(typeof(Dictionary<string, string>)));
             var result = typeof(SubClass).IsSubclassOfGeneric(typeof(Dictionary<,>));
-            Assert.IsTrue(result);
+            ClassicAssert.IsTrue(result);
             result = typeof(ReflectionHelperTests).IsSubclassOfGeneric(typeof(IDictionary<,>));
-            Assert.IsFalse(result);
+            ClassicAssert.IsFalse(result);
             result = typeof(SubClass2).IsSubclassOfGeneric(typeof(List<>));
-            Assert.IsTrue(result);
+            ClassicAssert.IsTrue(result);
         }
     }
 }

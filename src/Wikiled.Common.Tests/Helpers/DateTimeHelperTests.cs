@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Helpers;
 
 namespace Wikiled.Common.Tests.Helpers
@@ -13,7 +14,7 @@ namespace Wikiled.Common.Tests.Helpers
         public void FromUnixTime(long seconds, string date)
         {
             var result = seconds.FromUnixTime();
-            Assert.AreEqual(DateTime.Parse(date), result);
+            ClassicAssert.AreEqual(DateTime.Parse(date), result);
         }
 
         [TestCase("2012-02-02", 1328140800)]
@@ -21,7 +22,7 @@ namespace Wikiled.Common.Tests.Helpers
         public void ToUnixTime(string date, long seconds)
         {
             var result = DateTime.Parse(date).ToUnixTime();
-            Assert.AreEqual(seconds, result);
+            ClassicAssert.AreEqual(seconds, result);
         }
 
         [TestCase(1328140800000, "2012-02-02")]
@@ -30,7 +31,7 @@ namespace Wikiled.Common.Tests.Helpers
         public void FromUnixTimeMilis(long seconds, string date)
         {
             var result = seconds.FromUnixTimeMilis();
-            Assert.AreEqual(DateTime.Parse(date), result);
+            ClassicAssert.AreEqual(DateTime.Parse(date), result);
         }
 
         [TestCase("2012-02-02", 1328140800000)]
@@ -38,7 +39,7 @@ namespace Wikiled.Common.Tests.Helpers
         public void ToUnixTimeMilis(string date, long seconds)
         {
             var result = DateTime.Parse(date).ToUnixTimeMilis();
-            Assert.AreEqual(seconds, result);
+            ClassicAssert.AreEqual(seconds, result);
         }
 
         [TestCase(15372, "2012-02-02")]
@@ -47,7 +48,7 @@ namespace Wikiled.Common.Tests.Helpers
         public void FromUnixDays(int days, string date)
         {
             var result = days.FromUnixDays();
-            Assert.AreEqual(DateTime.Parse(date), result);
+            ClassicAssert.AreEqual(DateTime.Parse(date), result);
         }
 
         [TestCase("2012-02-02", 15372)]
@@ -55,7 +56,7 @@ namespace Wikiled.Common.Tests.Helpers
         public void ToUnixDays(string date, int seconds)
         {
             var result = DateTime.Parse(date).ToUnixDays();
-            Assert.AreEqual(seconds, result);
+            ClassicAssert.AreEqual(seconds, result);
         }
     }
 }

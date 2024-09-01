@@ -16,30 +16,30 @@ namespace Wikiled.Common.Reflection
         private static readonly ConcurrentDictionary<Type, Func<string, object>> ConversionMethods =
             new ConcurrentDictionary<Type, Func<string, object>>();
 
-        private static readonly ConcurrentDictionary<Type, bool> isPrimitive = new ConcurrentDictionary<Type, bool>();
+        private static readonly ConcurrentDictionary<Type, bool> PrimitiveTable = new ConcurrentDictionary<Type, bool>();
 
         private static readonly Dictionary<Type, BasicTypes> KnownTypes = new Dictionary<Type, BasicTypes>
                                                                           {
-                                                                              {typeof(bool), BasicTypes.Bool},
-                                                                              {typeof(char), BasicTypes.Char},
-                                                                              {typeof(sbyte), BasicTypes.SByte},
-                                                                              {typeof(byte), BasicTypes.Byte},
-                                                                              {typeof(short), BasicTypes.Short},
-                                                                              {typeof(ushort), BasicTypes.UShort},
-                                                                              {typeof(int), BasicTypes.Int},
-                                                                              {typeof(uint), BasicTypes.UInt},
-                                                                              {typeof(long), BasicTypes.Long},
-                                                                              {typeof(ulong), BasicTypes.ULong},
-                                                                              {typeof(float), BasicTypes.Float},
-                                                                              {typeof(double), BasicTypes.Double},
-                                                                              {typeof(decimal), BasicTypes.Decimal},
-                                                                              {typeof(string), BasicTypes.String},
-                                                                              {typeof(DateTime), BasicTypes.DateTime},
-                                                                              {typeof(TimeSpan), BasicTypes.TimeSpan},
-                                                                              {typeof(Guid), BasicTypes.Guid},
-                                                                              {typeof(Uri), BasicTypes.Uri},
-                                                                              {typeof(byte[]), BasicTypes.ByteArray},
-                                                                              {typeof(Type), BasicTypes.Type}
+                                                                              { typeof(bool), BasicTypes.Bool },
+                                                                              { typeof(char), BasicTypes.Char },
+                                                                              { typeof(sbyte), BasicTypes.SByte },
+                                                                              { typeof(byte), BasicTypes.Byte },
+                                                                              { typeof(short), BasicTypes.Short },
+                                                                              { typeof(ushort), BasicTypes.UShort },
+                                                                              { typeof(int), BasicTypes.Int },
+                                                                              { typeof(uint), BasicTypes.UInt },
+                                                                              { typeof(long), BasicTypes.Long },
+                                                                              { typeof(ulong), BasicTypes.ULong },
+                                                                              { typeof(float), BasicTypes.Float },
+                                                                              { typeof(double), BasicTypes.Double },
+                                                                              { typeof(decimal), BasicTypes.Decimal },
+                                                                              { typeof(string), BasicTypes.String },
+                                                                              { typeof(DateTime), BasicTypes.DateTime },
+                                                                              { typeof(TimeSpan), BasicTypes.TimeSpan },
+                                                                              { typeof(Guid), BasicTypes.Guid },
+                                                                              { typeof(Uri), BasicTypes.Uri },
+                                                                              { typeof(byte[]), BasicTypes.ByteArray },
+                                                                              { typeof(Type), BasicTypes.Type }
                                                                           };
 
         private static readonly Regex PropertyRegex = new Regex("(?<Name>[a-zA-Z][a-zA-Z0-9]*)(\\[(?<Index>[0-9]+)\\])?");
@@ -195,10 +195,10 @@ namespace Wikiled.Common.Reflection
                 return false;
             }
 
-            if (!isPrimitive.TryGetValue(type, out bool result))
+            if (!PrimitiveTable.TryGetValue(type, out bool result))
             {
                 result = type.IsPrimitive || type == typeof(string) || type.IsNumericType();
-                isPrimitive[type] = result;
+                PrimitiveTable[type] = result;
             }
 
             return result;

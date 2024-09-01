@@ -131,7 +131,7 @@ namespace Wikiled.Common.Helpers
             if (data == null ||
                 data.Length == 0)
             {
-                return new byte[] {};
+                return new byte[] { };
             }
 
             using (var memory = new MemoryStream(data))
