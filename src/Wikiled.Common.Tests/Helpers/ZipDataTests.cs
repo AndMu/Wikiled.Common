@@ -15,7 +15,7 @@ namespace Wikiled.Common.Tests.Helpers
         [SetUp]
         public void Setup()
         {
-            file = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Helpers\Data.zip");
+            file = Path.Combine(TestContext.CurrentContext.TestDirectory, "Helpers", "Data.zip");
         }
 
         [Test]
