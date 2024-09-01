@@ -16,8 +16,8 @@ namespace Wikiled.Common.Tests.Helpers
         [SetUp]
         public void Setup()
         {
-            sourceFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Helpers\Data");
-            targetFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"Helpers\Data2");
+            sourceFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "Helpers" ,"Data");
+            targetFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "Helpers" ,"Data2");
             if (Directory.Exists(targetFolder))
             {
                 Directory.Delete(targetFolder, true);
