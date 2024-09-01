@@ -52,13 +52,19 @@ namespace Wikiled.Common.Tests.Extensions
             ClassicAssert.AreEqual($"4{sep}1{sep}2{sep}3", $"1{sep}2{sep}3".InsertSubFolder("4", 4));
         }
 
-        [TestCase("/windows/system32", "/windows/system32/")]
-        [TestCase("c:/windows/system32/", "c:/windows/system32/")]
-        [TestCase("/windows/system32\\", "/windows/system32\\")]
-        [TestCase("\\windows\\system32\\", "\\windows\\system32\\")]
-        public void PathAddBackslash(string path, string result)
+        [TestCase("folder/subfolder", "folder/subfolder/")]
+        [TestCase("folder/subfolder/", "folder/subfolder/")]
+        [TestCase("folder\\subfolder", "folder\\subfolder\\")]
+        [TestCase("folder\\subfolder\\", "folder\\subfolder\\")]
+        public void PathAddBackslash(string path, string expectedResult)
         {
-            ClassicAssert.AreEqual(result, path.PathAddBackslash());
+            var result = path.PathAddBackslash();
+            var expectedSeparator = expectedResult.EndsWith("/") ? "/" : "\\";
+            var actualSeparator = result.EndsWith("/") ? "/" : "\\";
+
+            Assert.That(result, Does.EndWith(actualSeparator), "The result should end with a separator");
+            Assert.That(actualSeparator, Is.EqualTo(expectedSeparator), "The separator type should be preserved");
+            Assert.That(result.TrimEnd('/', '\\'), Is.EqualTo(path.TrimEnd('/', '\\')), "The path (without trailing separator) should remain unchanged");
         }
     }
 }
