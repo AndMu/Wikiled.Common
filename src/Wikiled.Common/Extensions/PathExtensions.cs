@@ -70,14 +70,14 @@ namespace Wikiled.Common.Extensions
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (depth < 0) throw new ArgumentOutOfRangeException(nameof(depth));
 
-            var items = path.Split('\\');
+            var items = path.Split(Path.DirectorySeparatorChar);
             bool firstReserved = false;
             string constructedPath = string.Empty;
             if (items.Length > 0 &&
                 items[0].IndexOf(":") > 0)
             {
                 firstReserved = true;
-                items[0] = items[0] + '\\';
+                items[0] = items[0] + Path.DirectorySeparatorChar;
                 constructedPath = items[0];
             }
 

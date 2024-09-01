@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Wikiled.Common.Helpers;
@@ -16,6 +17,7 @@ namespace Wikiled.Common.Extensions
 
             if (File.Exists(file))
             {
+                // delete empty file
                 FileInfo info = new FileInfo(file);
                 if (info.Length == 0)
                 {
@@ -30,8 +32,7 @@ namespace Wikiled.Common.Extensions
 
             string location = Path.GetDirectoryName(file);
             string fileName = Path.GetFileNameWithoutExtension(file);
-            System.Collections.Generic.IEnumerable<string> allFiles =
-                FileManager.FindFilesByMask(location, $"{fileName}.*");
+            IEnumerable<string> allFiles = FileManager.FindFilesByMask(location, $"{fileName}.*");
             int current = 0;
             foreach (string currentFile in allFiles)
             {
