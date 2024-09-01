@@ -20,6 +20,7 @@ namespace Wikiled.Common.Serialization
             {
                 // create a new BinaryFormatter instance
                 var formatter = new BinaryFormatter();
+
                 // serialize the class into the MemoryStream
                 formatter.Serialize(stream, data);
                 stream.Seek(0, 0);
@@ -27,7 +28,8 @@ namespace Wikiled.Common.Serialization
             }
         }
 
-        public static byte[] DCSerialize<T>(this T data) where T : class
+        public static byte[] DCSerialize<T>(this T data) 
+            where T : class
         {
             if (data == null)
             {
@@ -45,7 +47,8 @@ namespace Wikiled.Common.Serialization
             }
         }
 
-        public static T DCDeserialize<T>(this byte[] array) where T : class
+        public static T DCDeserialize<T>(this byte[] array) 
+            where T : class
         {
             if (array == null ||
                 array.Length == 0)

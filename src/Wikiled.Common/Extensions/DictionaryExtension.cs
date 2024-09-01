@@ -57,57 +57,57 @@ namespace Wikiled.Common.Extensions
         /// Given helper handles even if dictionry is null
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <returns>Dictionary key. default() if not found</returns>
-        public static K GetSafeNullAble<T, K>(this Dictionary<T, K> dictionary, T key)
+        public static TK GetSafeNullAble<T, TK>(this Dictionary<T, TK> dictionary, T key)
         {
-            return dictionary == null ? default(K) : GetSafe(dictionary, key);
+            return dictionary == null ? default(TK) : GetSafe(dictionary, key);
         }
 
         /// <summary>
         /// Extension method to dictionary to get value without exception
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <returns>Dictionary key. default() if not found</returns>
-        public static K GetSafe<T, K>(this Dictionary<T, K> dictionary, T key)
+        public static TK GetSafe<T, TK>(this Dictionary<T, TK> dictionary, T key)
         {
-            return dictionary.TryGetValue(key, out K value) ? value : default(K);
+            return dictionary.TryGetValue(key, out TK value) ? value : default(TK);
         }
 
         /// <summary>
         /// Get item from dictionary and if doesn't exist create new
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <returns>Dictionary key. If not found it will be creted</returns>
-        public static K GetSafeCreate<T, K>(this Dictionary<T, K> dictionary, T key)
-            where K : new()
+        public static TK GetSafeCreate<T, TK>(this Dictionary<T, TK> dictionary, T key)
+            where TK : new()
         {
-            return GetSafeCreate(dictionary, key, item => new K());
+            return GetSafeCreate(dictionary, key, item => new TK());
         }
 
         /// <summary>
         /// Get item from dictionary and if doesn't exist create new using supplied delegate 
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <param name="evalutor">Delegate to eveluate default value</param>
         /// <returns>Dictionary key. If not found it will be creted</returns>
-        public static K GetSafeCreate<T, K>(
-            this Dictionary<T, K> dictionary,
+        public static TK GetSafeCreate<T, TK>(
+            this Dictionary<T, TK> dictionary,
             T key,
-            Func<T, K> evalutor)
+            Func<T, TK> evalutor)
         {
-            if (dictionary.TryGetValue(key, out K value))
+            if (dictionary.TryGetValue(key, out TK value))
             {
                 return value;
             }
@@ -121,17 +121,17 @@ namespace Wikiled.Common.Extensions
         /// Get item from dictionary and if doesn't exist create new using supplied delegate 
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <param name="evalutor">Delegate to eveluate default value</param>
         /// <returns>Dictionary key. If not found it will be creted</returns>
-        public static K GetSafeCreate<T, K>(
-            this Dictionary<T, K> dictionary,
+        public static TK GetSafeCreate<T, TK>(
+            this Dictionary<T, TK> dictionary,
             T key,
-            Func<K> evalutor)
+            Func<TK> evalutor)
         {
-            if (dictionary.TryGetValue(key, out K value))
+            if (dictionary.TryGetValue(key, out TK value))
             {
                 return value;
             }
@@ -145,76 +145,76 @@ namespace Wikiled.Common.Extensions
         /// Given helper handles even if dictionry is null
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <returns>Dictionary key. default() if not found</returns>
-        public static K GetSafeNullAble<T, K>(this IDictionary<T, K> dictionary, T key)
+        public static TK GetSafeNullAble<T, TK>(this IDictionary<T, TK> dictionary, T key)
         {
-            return dictionary == null ? default(K) : GetSafe(dictionary, key);
+            return dictionary == null ? default(TK) : GetSafe(dictionary, key);
         }
 
         /// <summary>
         /// Extension method to dictionary to get value without exception
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <returns>Dictionary key. default() if not found</returns>
-        public static K GetSafe<T, K>(this IDictionary<T, K> dictionary, T key)
+        public static TK GetSafe<T, TK>(this IDictionary<T, TK> dictionary, T key)
         {
-            return dictionary.TryGetValue(key, out K value) ? value : default(K);
+            return dictionary.TryGetValue(key, out TK value) ? value : default(TK);
         }
 
         /// <summary>
         /// Extension method to dictionary to get value without exception and delete if it existed 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="TK"></typeparam>
         /// <param name="dictionary"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static K GetSafeDelete<T, K>(this IDictionary<T, K> dictionary, T key)
+        public static TK GetSafeDelete<T, TK>(this IDictionary<T, TK> dictionary, T key)
         {
-            if (dictionary.TryGetValue(key, out K value))
+            if (dictionary.TryGetValue(key, out TK value))
             {
                 dictionary.Remove(key);
                 return value;
             }
 
-            return default(K);
+            return default(TK);
         }
 
         /// <summary>
         /// Get item from dictionary and if doesn't exist create new
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <returns>Dictionary key. If not found it will be creted</returns>
-        public static K GetSafeCreate<T, K>(this IDictionary<T, K> dictionary, T key)
-            where K : new()
+        public static TK GetSafeCreate<T, TK>(this IDictionary<T, TK> dictionary, T key)
+            where TK : new()
         {
-            return GetSafeCreate(dictionary, key, item => new K());
+            return GetSafeCreate(dictionary, key, item => new TK());
         }
 
         /// <summary>
         /// Get item from dictionary and if doesn't exist create new using supplied delegate 
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <param name="evalutor">Delegate to eveluate default value</param>
         /// <returns>Dictionary key. If not found it will be creted</returns>
-        public static K GetSafeCreate<T, K>(
-            this IDictionary<T, K> dictionary,
+        public static TK GetSafeCreate<T, TK>(
+            this IDictionary<T, TK> dictionary,
             T key,
-            Func<T, K> evalutor)
+            Func<T, TK> evalutor)
         {
-            if (dictionary.TryGetValue(key, out K value))
+            if (dictionary.TryGetValue(key, out TK value))
             {
                 return value;
             }
@@ -228,17 +228,17 @@ namespace Wikiled.Common.Extensions
         /// et item from dictionary and if doesn't exist create new using supplied delegate 
         /// </summary>
         /// <typeparam name="T">Dictionary key type</typeparam>
-        /// <typeparam name="K">Dictionary value type</typeparam>
+        /// <typeparam name="TK">Dictionary value type</typeparam>
         /// <param name="dictionary">Dictionary to which given function is attached</param>
         /// <param name="key">Dictionary key</param>
         /// <param name="evalutor">Delegate to eveluate default value</param>
         /// <returns>Dictionary key. If not found it will be creted</returns>
-        public static K GetSafeCreate<T, K>(
-            this IDictionary<T, K> dictionary,
+        public static TK GetSafeCreate<T, TK>(
+            this IDictionary<T, TK> dictionary,
             T key,
-            Func<K> evalutor)
+            Func<TK> evalutor)
         {
-            if (dictionary.TryGetValue(key, out K value))
+            if (dictionary.TryGetValue(key, out TK value))
             {
                 return value;
             }

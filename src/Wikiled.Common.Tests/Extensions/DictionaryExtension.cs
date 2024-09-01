@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Extensions;
 
 namespace Wikiled.Common.Tests.Extensions
@@ -14,9 +15,9 @@ namespace Wikiled.Common.Tests.Extensions
             Dictionary<int, int> table = new Dictionary<int, int>(1);
             table.Add(1, 1);
             table.Add(2, 1);
-            Assert.AreEqual(2, table.Count);
+            ClassicAssert.AreEqual(2, table.Count);
             var newTable = table.Compact();
-            Assert.AreEqual(2, newTable.Count);
+            ClassicAssert.AreEqual(2, newTable.Count);
         }
 
         [Test]
@@ -24,11 +25,11 @@ namespace Wikiled.Common.Tests.Extensions
         {
             ConcurrentDictionary<string, string> table = new ConcurrentDictionary<string, string>();
             var result = table.TryGetAddItem("Test", "Test", out string value);
-            Assert.IsTrue(result);
-            Assert.AreEqual("Test", value);
+            ClassicAssert.IsTrue(result);
+            ClassicAssert.AreEqual("Test", value);
             result = table.TryGetAddItem("Test", "Test1", out value);
-            Assert.IsTrue(result);
-            Assert.AreEqual("Test", value);
+            ClassicAssert.IsTrue(result);
+            ClassicAssert.AreEqual("Test", value);
         }
     }
 }

@@ -5,7 +5,8 @@ namespace Wikiled.Common.Serialization
 {
     public static class Serialization
     {
-        public static T DeserializeFromFile<T>(string file) where T : class
+        public static T DeserializeFromFile<T>(string file) 
+            where T : class
         {
             if (string.IsNullOrEmpty(file))
             {

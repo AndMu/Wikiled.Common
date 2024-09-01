@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Extensions;
 
 namespace Wikiled.Common.Tests.Extensions
@@ -10,11 +11,11 @@ namespace Wikiled.Common.Tests.Extensions
         public void ContainWord()
         {
             const string text = "I like this book and #xtray with mouse#";
-            Assert.IsTrue(text.ContainWord("like", false));
-            Assert.IsTrue(text.ContainWord("xtray", true));
-            Assert.IsFalse(text.ContainWord("xtray", false));
-            Assert.IsFalse(text.ContainWord("mouse", false));
-            Assert.IsTrue(text.ContainWord("mouse#", true));
+            ClassicAssert.IsTrue(text.ContainWord("like", false));
+            ClassicAssert.IsTrue(text.ContainWord("xtray", true));
+            ClassicAssert.IsFalse(text.ContainWord("xtray", false));
+            ClassicAssert.IsFalse(text.ContainWord("mouse", false));
+            ClassicAssert.IsTrue(text.ContainWord("mouse#", true));
         }
 
         [TestCase("test1)", "test1_")]
@@ -22,7 +23,7 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("!2323test1", "_2323test1")]
         public void CreateLetterText(string text, string result)
         {
-            Assert.AreEqual(result, text.CreateLetterText());
+            ClassicAssert.AreEqual(result, text.CreateLetterText());
         }
 
         [TestCase("test1)", "test1.")]
@@ -30,7 +31,7 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("!2323test1", ".2323test1")]
         public void CreatePureLetterText(string text, string result)
         {
-            Assert.AreEqual(result, text.CreatePureLetterText());
+            ClassicAssert.AreEqual(result, text.CreatePureLetterText());
         }
 
         [TestCase("(", "")]
@@ -41,7 +42,7 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("(test))", "(test")]
         public void RemoveLastNonLetters(string text, string result)
         {
-            Assert.AreEqual(result, text.RemoveLastNonLetters());
+            ClassicAssert.AreEqual(result, text.RemoveLastNonLetters());
         }
 
         [TestCase("(", "")]
@@ -51,7 +52,7 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("((test)", "test)")]
         public void RemoveBeginingNonLetters(string text, string result)
         {
-            Assert.AreEqual(result, text.RemoveBeginingNonLetters());
+            ClassicAssert.AreEqual(result, text.RemoveBeginingNonLetters());
         }
 
         [TestCase("test", true)]
@@ -61,7 +62,7 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("23423432", false)]
         public void HasLetters(string text, bool result)
         {
-            Assert.AreEqual(result, text.HasLetters());
+            ClassicAssert.AreEqual(result, text.HasLetters());
         }
 
         [TestCase("test", false)]
@@ -71,7 +72,7 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("23423432", true)]
         public void HasNonLetters(string text, bool result)
         {
-            Assert.AreEqual(result, text.HasNonLetters());
+            ClassicAssert.AreEqual(result, text.HasNonLetters());
         }
 
         [TestCase("ing", "ing", true)]
@@ -79,7 +80,7 @@ namespace Wikiled.Common.Tests.Extensions
         [TestCase("inging", "ing", true)]
         public void IsEnding(string text, string ending, bool result)
         {
-            Assert.AreEqual(result, text.IsEnding(ending));
+            ClassicAssert.AreEqual(result, text.IsEnding(ending));
         }
 
         [TestCase("My  whole life", " ", true, "My whole life")]
@@ -90,21 +91,21 @@ namespace Wikiled.Common.Tests.Extensions
         {
             var letters = remove.ToCharArray();
             var result = text.RemoveCharacters(duplicates, letters);
-            Assert.AreEqual(expected, result);
+            ClassicAssert.AreEqual(expected, result);
         }
 
         [TestCase("sudarė valdančiąją koaliciją", "sudare valdanciaja koalicija")]
         public void RemoveDiacritics(string text, string expected)
         {
             var result = text.RemoveDiacritics();
-            Assert.AreEqual(expected, result);
+            ClassicAssert.AreEqual(expected, result);
         }
 
         [TestCase("This is text", "is", "as", "This as text")]
         public void ReplaceString(string text, string replace, string with, string expected)
         {
             var result = text.ReplaceString(replace, with, ReplacementOption.IgnoreCase | ReplacementOption.WholeWord);
-            Assert.AreEqual(expected, result);
+            ClassicAssert.AreEqual(expected, result);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>8</LangVersion>
@@ -10,10 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="NUnit" version="3.13.2" />
-    <packagereference Include="Microsoft.NET.Test.Sdk" Version="17.0.0"></packagereference>
-    <packagereference Include="NUnit3TestAdapter" Version="4.2.1">
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="NUnit" version="4.2.2" />
+    <packagereference Include="Microsoft.NET.Test.Sdk" Version="17.11.0"></packagereference>
+    <packagereference Include="NUnit3TestAdapter" Version="4.6.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </packagereference>

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Common.Helpers;
 
 namespace Wikiled.Common.Tests.Helpers
@@ -27,27 +28,27 @@ namespace Wikiled.Common.Tests.Helpers
         public void Copy()
         {
             FileRelativeCopyItem[] files = DirectoryRelativeCopyItem.Copy(sourceFolder, targetFolder).ToArray();
-            Assert.AreEqual(2, files.Length);
-            Assert.False(File.Exists(files[0].FileTarget));
-            Assert.True(File.Exists(files[0].FileSource));
+            ClassicAssert.AreEqual(2, files.Length);
+            ClassicAssert.False(File.Exists(files[0].FileTarget));
+            ClassicAssert.True(File.Exists(files[0].FileSource));
             files[0].Copy();
-            Assert.True(File.Exists(files[0].FileTarget));
-            Assert.True(File.Exists(files[0].FileSource));
+            ClassicAssert.True(File.Exists(files[0].FileTarget));
+            ClassicAssert.True(File.Exists(files[0].FileSource));
             files[1].Copy();
-            Assert.True(File.Exists(files[1].FileTarget));
+            ClassicAssert.True(File.Exists(files[1].FileTarget));
         }
 
         [Test]
         public void Read()
         {
             FileRelativeCopyItem[] files = DirectoryRelativeCopyItem.Copy(sourceFolder, targetFolder).ToArray();
-            Assert.AreEqual(2, files.Length);
-            Assert.IsNull(files[0].Content);
+            ClassicAssert.AreEqual(2, files.Length);
+            ClassicAssert.IsNull(files[0].Content);
             files[0].Read();
             files[0].Content = "22";
             files[0].Copy();
             var content = File.ReadAllText(files[0].FileTarget);
-            Assert.AreEqual(content, files[0].Content);
+            ClassicAssert.AreEqual(content, files[0].Content);
         }
     }
 }
